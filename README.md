@@ -40,7 +40,7 @@ end
 ```
 
 It will produce output like this:
-![Preview](//raw.github.com/maxlinc/matrix_formatter/master/sample_html.png)
+![Preview](https://raw.github.com/maxlinc/matrix_formatter/master/sample_html.png)
 
 ## Installation
 
