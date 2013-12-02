@@ -2,7 +2,7 @@ require 'rspec/core/formatters/base_text_formatter'
 
 module MatrixFormatter
   module Formatters
-    class BaseFormatter < RSpec::Core::Formatters::BaseTextFormatter
+    class BaseFormatter < RSpec::Core::Formatters::BaseFormatter
       attr_accessor :matrix
 
       def initialize(output)

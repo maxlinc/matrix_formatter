@@ -7,7 +7,7 @@ end
 
 describe 'Cool Feature Group' do
   implementors.each do |implementor|
-    describe implementor do
+    context implementor do
       it 'makes cool stuff' do
         fail if implementor.eql? implementors.first
       end
