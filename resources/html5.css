@@ -1,0 +1,39 @@
+.matrix_labels {
+    background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f));
+    background:-moz-linear-gradient(center top, #005fbf 5%, #003f7f 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");
+    background: -o-linear-gradient(top, #005fbf, 003f7f);
+    background-color:#005fbf;
+    border:0px solid #000000;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    font-size:14px;
+    font-family:Arial;
+    font-weight:bold;
+    color:#ffffff;
+}
+.feature_matrix tr:nth-of-type(odd) {
+    background-color:#ccc;
+}
+.feature_matrix tr:nth-of-type(even) {
+    background-color:#aad4ff;
+}
+.feature_matrix aside {
+    display: none;
+}
+td {
+    padding: 7px 10px;
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.passed {
+    color: green;
+}
+.failed {
+    color: red;
+}
+.pending {
+    color: blue;
+}
