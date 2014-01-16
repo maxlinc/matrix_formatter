@@ -86,7 +86,7 @@ module MatrixFormatter
     end
 
     def to_json(options={})
-      MultiJson.encode @results
+      MultiJson.encode @results, :pretty => true
     end
   end
 end
