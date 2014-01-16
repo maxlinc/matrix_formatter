@@ -1,5 +1,4 @@
 require 'matrix_formatter'
-
 class MatrixFormatter::Formatters::MarkdownFormatter < MatrixFormatter::Formatters::BaseFormatter
   def markdown
     buffer = StringIO.new
@@ -7,12 +6,12 @@ class MatrixFormatter::Formatters::MarkdownFormatter < MatrixFormatter::Formatte
     buffer.puts header_line
     buffer.puts header_line.gsub(/[^|]/, '-')
 
-    @matrix.results.each do |product, features|
+    @matrix.results.each do |product_name, product|
       # Only show the product on the first line
-      product_text = "**#{product}**"
-      features.each do |feature_key, feature_results|
+      product_text = "**#{product_name}**"
+      product.features.each do |feature_key, features|
         states = RSpec.configuration.matrix_implementors.map { |implementor|
-          feature_results[implementor]
+          features.results[implementor]["state"]
         }
         buffer.puts [product_text, "**#{feature_key}**", states].join ' | '
         product_text = ''

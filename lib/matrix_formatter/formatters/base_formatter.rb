@@ -16,27 +16,23 @@ module MatrixFormatter
 
       def example_group_started(example_group)
         description = example_group.description
-        if @matrix.implementors.include? description
-          @matrix.current_implementor = description
+        if example_group.top_level?
+          @matrix.add_product example_group
         else
-          @matrix.current_product = description
+          @matrix.add_feature example_group
         end
       end
 
-      def example_started(example)
-        @matrix.current_feature = example.description
-      end
-
       def example_passed(example)
-        @matrix.add_result :passed
+        @matrix.add_implementation_result :passed, example
       end
 
       def example_failed(example)
-        @matrix.add_result :failed
+        @matrix.add_implementation_result :failed, example
       end
 
       def example_pending(example)
-        @matrix.add_result :pending
+        @matrix.add_implementation_result :pending, example
       end
 
       def dump_summary(duration, example_count, failure_count, pending_count)
