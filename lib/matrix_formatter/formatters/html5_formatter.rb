@@ -1,7 +1,7 @@
 require 'matrix_formatter'
 require 'nokogiri'
 
-class MatrixFormatter::Formatters::HTML5Formatter < MatrixFormatter::Formatters::MarkdownFormatter
+class MatrixFormatter::Formatters::HTML5Formatter < MatrixFormatter::Formatters::BaseFormatter
   def start_dump
     @renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true)
 

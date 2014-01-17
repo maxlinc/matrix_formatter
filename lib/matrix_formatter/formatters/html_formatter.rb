@@ -1,4 +1,5 @@
 require 'matrix_formatter'
+require 'matrix_formatter/formatters/markdown_formatter'
 
 class MatrixFormatter::Formatters::HTMLFormatter < MatrixFormatter::Formatters::MarkdownFormatter
   def start_dump
