@@ -1,4 +1,11 @@
+require 'fileutils'
+
 describe 'reports' do
+  before(:all) do
+    FileUtils.rm_rf 'results'
+    FileUtils.mkdir 'results'
+  end
+
   formatters = {
     'json' => { :class => 'MatrixFormatter::Formatters::JSONFormatter', :filename => 'matrix.json' },
     'markdown' => { :class => 'MatrixFormatter::Formatters::MarkdownFormatter', :filename => 'matrix.md' },
