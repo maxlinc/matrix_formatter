@@ -5,13 +5,27 @@ RSpec.configure do |config|
   config.matrix_implementors = ['LegacyWidget', 'HTML5Widget']
 end
 
-describe 'MVP Features' do
-  implementors.each do |implementor|
-    context implementor do
-      it 'creates a thing' do
+describe 'MVP Features', :markdown =>
+"""
+You can use [Markdown](http://daringfireball.net/projects/markdown/) produce extra documentation
+on the feature matrix.
+""" do
+  describe 'creates a thing', :link => "https://github.com/maxlinc/matrix_formatter", :markdown =>
+  """
+  Yes, it works here as well.
+  """ do
+    implementors.each do |implementor|
+      it implementor do
         fail if implementor.eql? implementors.first
       end
-      it 'saves a thing' do
+    end
+  end
+  describe 'saves a thing', :link => "http://www.google.com", :markdown =>
+  """
+  Hello again!
+  """ do
+    implementors.each do |implementor|
+      it implementor do
         fail unless implementor.eql? implementors.first
       end
     end
@@ -19,15 +33,23 @@ describe 'MVP Features' do
 end
 
 describe 'Cool Features' do
-  implementors.each do |implementor|
-    context implementor do
-      it 'renders a nyan cat video' do
+  describe 'renders a nyan cat video' do
+    implementors.each do |implementor|
+      it implementor do
         fail if implementor.eql? implementors.first
       end
-      it 'does a headstand' do
+    end
+  end
+  describe 'does a headstand' do
+    implementors.each do |implementor|
+      it implementor do
         fail unless implementor.eql? implementors.first
       end
-      pending 'reads your mind'
+    end
+  end
+  describe 'reads your mind' do
+    implementors.each do |implementor|
+      pending implementor
     end
   end
 end

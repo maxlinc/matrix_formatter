@@ -1,0 +1,83 @@
+
+    <html>
+    <head>
+    <style type="text/css">
+      td {
+          padding: 7px 10px;
+          vertical-align: top;
+          text-align: left;
+          border: 1px solid #ddd;
+      }
+      .passed {
+        color: green;
+      }
+      .failed {
+        color: red;
+      }
+      .pending {
+        color: blue;
+      }
+    </style>
+    </head>
+    <body>
+    
+<table><thead>
+<tr>
+<th>Feature Group</th>
+<th>Feature</th>
+<th>LegacyWidget</th>
+<th>HTML5Widget</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>MVP Features</strong></td>
+<td><strong>creates a thing</strong></td>
+<td>failed</td>
+<td>passed</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>saves a thing</strong></td>
+<td>passed</td>
+<td>failed</td>
+</tr>
+<tr>
+<td><strong>Cool Features</strong></td>
+<td><strong>renders a nyan cat video</strong></td>
+<td>failed</td>
+<td>passed</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>does a headstand</strong></td>
+<td>passed</td>
+<td>failed</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>reads your mind</strong></td>
+<td>pending</td>
+<td>pending</td>
+</tr>
+</tbody></table>
+
+    </body>
+    <script type="text/javascript">
+      var table = document.getElementsByTagName('table')[0];
+      var tbody = table.getElementsByTagName('tbody')[0];
+      var cells = tbody.getElementsByTagName('td');
+
+      for (var i=0, len=cells.length; i<len; i++){
+          if (cells[i].innerText === 'failed'){
+              cells[i].className = 'failed';
+          }
+          else if (cells[i].innerText === 'passed'){
+              cells[i].className = 'passed';
+          }
+          else if (cells[i].innerText === 'pending'){
+              cells[i].className = 'pending';
+          }
+      }
+    </script>
+    </html>
+    

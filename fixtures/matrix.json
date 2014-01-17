@@ -1,0 +1,118 @@
+{
+  "MVP Features": {
+    "data": {
+    },
+    "link": null,
+    "markdown": "\nYou can use [Markdown](http://daringfireball.net/projects/markdown/) produce extra documentation\non the feature matrix.\n",
+    "features": {
+      "creates a thing": {
+        "data": {
+        },
+        "link": "https://github.com/maxlinc/matrix_formatter",
+        "markdown": "\n  Yes, it works here as well.\n  ",
+        "results": {
+          "LegacyWidget": {
+            "data": {
+            },
+            "link": "https://github.com/maxlinc/matrix_formatter",
+            "state": "failed"
+          },
+          "HTML5Widget": {
+            "data": {
+            },
+            "link": "https://github.com/maxlinc/matrix_formatter",
+            "state": "passed"
+          }
+        }
+      },
+      "saves a thing": {
+        "data": {
+        },
+        "link": "http://www.google.com",
+        "markdown": "\n  Hello again!\n  ",
+        "results": {
+          "LegacyWidget": {
+            "data": {
+            },
+            "link": "http://www.google.com",
+            "state": "passed"
+          },
+          "HTML5Widget": {
+            "data": {
+            },
+            "link": "http://www.google.com",
+            "state": "failed"
+          }
+        }
+      }
+    }
+  },
+  "Cool Features": {
+    "data": {
+    },
+    "link": null,
+    "markdown": null,
+    "features": {
+      "renders a nyan cat video": {
+        "data": {
+        },
+        "link": null,
+        "markdown": null,
+        "results": {
+          "LegacyWidget": {
+            "data": {
+            },
+            "link": null,
+            "state": "failed"
+          },
+          "HTML5Widget": {
+            "data": {
+            },
+            "link": null,
+            "state": "passed"
+          }
+        }
+      },
+      "does a headstand": {
+        "data": {
+        },
+        "link": null,
+        "markdown": null,
+        "results": {
+          "LegacyWidget": {
+            "data": {
+            },
+            "link": null,
+            "state": "passed"
+          },
+          "HTML5Widget": {
+            "data": {
+            },
+            "link": null,
+            "state": "failed"
+          }
+        }
+      },
+      "reads your mind": {
+        "data": {
+        },
+        "link": null,
+        "markdown": null,
+        "results": {
+          "LegacyWidget": {
+            "data": {
+            },
+            "link": null,
+            "state": "pending"
+          },
+          "HTML5Widget": {
+            "data": {
+            },
+            "link": null,
+            "state": "pending"
+          }
+        }
+      }
+    }
+  }
+}

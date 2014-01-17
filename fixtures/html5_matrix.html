@@ -1,0 +1,117 @@
+
+    <html>
+    <head>
+    <script type='text/javascript' src='https://code.jquery.com/jquery-2.0.2.js'></script>
+    <style type="text/css">
+      .matrix_labels {
+    background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f));
+    background:-moz-linear-gradient(center top, #005fbf 5%, #003f7f 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");
+    background: -o-linear-gradient(top, #005fbf, 003f7f);
+    background-color:#005fbf;
+    border:0px solid #000000;
+    text-align:center;
+    border-width:0px 0px 1px 1px;
+    font-size:14px;
+    font-family:Arial;
+    font-weight:bold;
+    color:#ffffff;
+}
+.feature_matrix tr:nth-of-type(odd) {
+    background-color:#ccc;
+}
+.feature_matrix tr:nth-of-type(even) {
+    background-color:#aad4ff;
+}
+.feature_matrix aside {
+    display: none;
+}
+td {
+    padding: 7px 10px;
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+a:link {color:#FF0000;}      /* unvisited link */
+a:visited {color:#00FF00;}  /* visited link */
+a:hover {color:#FF00FF;}  /* mouse over link */
+a:active {color:#0000FF;}  /* selected link */
+.passed, .passed a:link, .passed a:visited {
+    color: green;
+}
+.failed, .failed a:link, .failed a:visited{
+    color: red;
+}
+.pending, .pending a:link, .pending a:visited {
+    color: blue;
+}
+
+    </style>
+    </head>
+    <body>
+    
+<table>
+<thead class="matrix_labels"><tr>
+<th>Feature Group</th>
+<th>Feature</th>
+<th>LegacyWidget</th>
+<th>HTML5Widget</th>
+</tr></thead>
+<tbody class="feature_matrix">
+<tr>
+<td class="feature_group" rowspan="2">MVP Features<aside><p>You can use <a href="http://daringfireball.net/projects/markdown/">Markdown</a> produce extra documentation
+on the feature matrix.</p>
+</aside>
+</td>
+<td class="feature">creates a thing<aside><p>Yes, it works here as well.</p>
+</aside>
+</td>
+<td class="failed"><a href="https://github.com/maxlinc/matrix_formatter" target="_blank">failed</a></td>
+<td class="passed"><a href="https://github.com/maxlinc/matrix_formatter" target="_blank">passed</a></td>
+</tr>
+<tr>
+<td class="feature">saves a thing<aside><p>Hello again!</p>
+</aside>
+</td>
+<td class="passed"><a href="http://www.google.com" target="_blank">passed</a></td>
+<td class="failed"><a href="http://www.google.com" target="_blank">failed</a></td>
+</tr>
+<tr>
+<td class="feature_group" rowspan="3">Cool Features</td>
+<td class="feature">renders a nyan cat video</td>
+<td class="failed">failed</td>
+<td class="passed">passed</td>
+</tr>
+<tr>
+<td class="feature">does a headstand</td>
+<td class="passed">passed</td>
+<td class="failed">failed</td>
+</tr>
+<tr>
+<td class="feature">reads your mind</td>
+<td class="pending">pending</td>
+<td class="pending">pending</td>
+</tr>
+</tbody>
+</table>
+
+    </body>
+    <script type="text/javascript">
+      $(document).ready(function () {
+    // function showCode() {
+    //     var sourceCodeLink = $(this).data("link");
+    //     window.open(sourceCodeLink);
+    // }
+
+    $(".feature_matrix").on("click", "td", function () {
+        $(this).find("aside").slideToggle();
+    });
+
+    // $('.feature_matrix').on("click", ".passed", showCode);
+    // $('.feature_matrix').on("click", ".failed", showCode);
+    // $('.feature_matrix').on("click", ".pending", createCode);
+});
+    </script>
+    </html>
+    
