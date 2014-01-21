@@ -6,10 +6,13 @@ module MatrixFormatter
     property :data
     property :link
     property :markdown
+    property :services
+    property :environment
 
     def initialize example
       self.data = example.metadata.select {|k,v| k.to_s.start_with? 'data-'}
-      self.link = example.metadata[:link] || example.metadata['link']
+      self.environment = example.metadata[:environment]
+      self.services = example.metadata[:services]
       markdown = example.metadata[:markdown]
       if example.is_a? RSpec::Core::Example
         parent_markdown = example.example_group.parent_groups.map {|eg| eg.metadata[:markdown]}

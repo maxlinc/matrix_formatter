@@ -11,7 +11,11 @@ class MatrixFormatter::Formatters::MarkdownFormatter < MatrixFormatter::Formatte
       product_text = "**#{product_name}**"
       product.features.each do |feature_key, features|
         states = RSpec.configuration.matrix_implementors.map { |implementor|
-          features.results[implementor]["state"]
+          begin
+            features.results[implementor]["state"]
+          rescue NoMethodError => e
+            "skipped" # This should only happen when running a subset of tests
+          end
         }
         buffer.puts [product_text, "**#{feature_key}**", states].join ' | '
         product_text = ''
