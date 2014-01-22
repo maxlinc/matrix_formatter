@@ -41,9 +41,11 @@ module MatrixFormatter
 
   class MatrixResult < MatrixItem
     property :state, :required => true
+    property :runtime
     def initialize state, example
       super(example)
       self.state = state
+      self.runtime = example.execution_result[:run_time]
     end
   end
 
