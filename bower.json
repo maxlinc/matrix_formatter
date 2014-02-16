@@ -1,0 +1,14 @@
+{
+  "name": "matrix_formatter",
+  "version": "0.0.2.pre",
+  "homepage": "https://github.com/maxlinc/matrix_formatter",
+  "authors": [
+    "Max Lincoln <max@devopsy.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "bootstrap": "~3.1.1"
+  }
+}

@@ -1,117 +1,65 @@
 require 'matrix_formatter'
-require 'nokogiri'
+require 'slim'
+require 'sprockets'
+require 'fileutils'
+require 'hashie/mash'
 
 class MatrixFormatter::Formatters::HTML5Formatter < MatrixFormatter::Formatters::BaseFormatter
+  SLIM_OPTIONS = {:pretty => true, :format => :html5}
+  SPROCKET_OPTIONS = {:minify => false}
   def start_dump
-    @renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true)
-
-    @output.puts header
-    @output.puts matrix_html
-    @output.puts footer
+    sprocketify
+    @output.puts Slim::Template.new(resource_path('dashboard.html.slim'), SLIM_OPTIONS).render(self)
   end
 
-  protected
+  def sprocketify
+    environment = Sprockets::Environment.new
+    environment.append_path resource_path('css')
+    environment.append_path resource_path('javascript')
+    # FIXME: Not sure Bower integration will work as well as I hoped
+    environment.append_path vendor_path('sizzle/dist')
+    environment.append_path vendor_path('jquery/dist')
+    environment.append_path vendor_path('bootstrap/dist/js')
+    environment.append_path vendor_path('bootstrap/dist/css')
+    # environment.append_path vendor_path('bootstrap/dist/fonts')
 
-  def matrix_html
-    @builder = Nokogiri::HTML::Builder.new do |doc|
-      doc.table {
-        doc.thead(:class => "matrix_labels") {
-          doc.tr {
-            labels = ['Feature Group', 'Feature', RSpec.configuration.matrix_implementors].flatten
-            labels.each do | label_text |
-              doc.th {
-                doc.text label_text
-              }
-            end
-          }
-        }
-        doc.tbody(:class => "feature_matrix") {
-          @matrix.results.each do |product_key, product|
-            inserted_group_td = false
-            product.features.each do |feature_key, feature|
-              results = feature.results
-              doc.tr {
-                unless inserted_group_td
-                  doc.td(:class => "feature_group", :rowspan => product.features.size) {
-                    doc.text product_key
-                    if product.markdown
-                      doc.aside {
-                        doc << @renderer.render(product.markdown)
-                      }
-                    end
-                  }
-                  inserted_group_td = true
-                end
-                doc.td(:class => "feature") {
-                  doc.text feature_key
-                  if feature.markdown
-                    doc.aside {
-                      doc << @renderer.render(feature.markdown)
-                    }
-                  end
-                }
-                sorted_results = RSpec.configuration.matrix_implementors.map { |implementor|
-                  results[implementor]
-                }
-                sorted_results.each do |result|
-                  doc.td(result.data.merge({:class => result.state})) {
-                    if result.link
-                      doc.a(:href => result.link, :target => "_blank") {
-                        doc.text result.state
-                      }
-                    else
-                      doc.text result.state
-                    end
-
-                    if result.markdown
-                      doc.aside {
-                        doc << @renderer.render(result.markdown)
-                      }
-                    end
-                  }
-                end
-              }
-            end
-          end
-        }
-      }
+    if SPROCKET_OPTIONS[:minify]
+      environment.js_compressor  = :uglify
+      environment.css_compressor = :scss
     end
-    @builder.doc.inner_html
+    environment['dashboard.js'].write_to 'docs/resources/dashboard.js'
+    environment['dashboard.css'].write_to 'docs/resources/dashboard.css'
+
+    # Copy bootstrap fonts and icons
+    FileUtils.mkdir_p "docs/fonts/"
+    FileUtils.cp_r vendor_path('bootstrap/dist/fonts/'), "docs/"
   end
 
-  def load_resource name
-    file = File.join(File.dirname(File.expand_path(__FILE__)), '../../../resources', name)
-    File.read file
+  private
+
+  def labels
+    ['Feature Group', 'Feature', @matrix.implementors].flatten
   end
 
-  def css
-    load_resource "html5.css"
+  def sorted_results feature, results
+    @matrix.implementors.map { |implementor|
+      results[implementor] || Hashie::Mash.new({
+        :state => "unknown",
+        "data" => {"data-challenge"=>feature.data["challenge"], "data-sdk"=>implementor}
+      })
+    }
   end
 
-  def javascript
-    load_resource "html5.js"
+  def resource_path name
+    File.join(File.dirname(File.expand_path(__FILE__)), '../../../resources/html5', name)
   end
 
-  def header
-    """
-    <html>
-    <head>
-    <script type='text/javascript' src='https://code.jquery.com/jquery-2.0.2.js'></script>
-    <style type=\"text/css\">
-      #{css}
-    </style>
-    </head>
-    <body>
-    """
+  def vendor_path name
+    File.join(File.dirname(File.expand_path(__FILE__)), '../../../resources/vendor', name)
   end
 
-  def footer
-    """
-    </body>
-    <script type=\"text/javascript\">
-      #{javascript}
-    </script>
-    </html>
-    """
+  def partial name
+    partial_file = "_#{name}.html.slim"
+    Slim::Template.new(resource_path(partial_file), SLIM_OPTIONS).render(self)
   end
 end

@@ -1,0 +1,56 @@
+#modalPlaceHolder.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"
+        h4.modal-title Modal title
+      .modal-body
+        p This is a test
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button"
+    /! /.modal-content
+  /! /.modal-dialog
+/! /.modal
+#code_modal.modal.bigmodal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"
+        h4.modal-title Modal title
+      .modal-body.container
+        /! Header and Nav
+        .row
+          .col-lg-3
+            h1
+          .col-lg-8
+            div
+              ul#sdk-nav.nav.nav-pills
+          .col-lg-1.right
+            .btn-group
+              button.btn.btn-default.dropdown-toggle data-toggle="dropdown" type="button"
+                | Source
+                span.caret
+              ul.dropdown-menu role="menu"
+                li
+                  a href="#"
+                li#annotated-nav
+                  a.disabled href="#"
+                li#github-nav
+        /! End Header and Nav
+        .row
+          /! Main Content Section
+          /! This has been source ordered to come first in the markup (and on small devices) but to be to the right of the nav on larger screens
+          .col-lg-9.col-lg-push-3
+            #editor-mask.row
+              #editor-container
+                #editor
+          /! Nav Sidebar
+          /! This is source ordered to be pulled to the left on larger screens
+          .col-lg-3.col-lg-pull-9
+            #accordion.panel-group
+        /! Footer
+        footer.row
+          /! Nothing yet
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button"
+        button#test_changes.btn.btn-primary data-container="body" data-content="Coming soon?" data-placement="top" data-toggle="popover" type="button"
