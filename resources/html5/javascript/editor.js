@@ -33,7 +33,7 @@ function SDK(sdk, language, editor) {
     this.annotatedDocumentationURL = function (challenge) {
         var challengeFile = this.challengeFile(challenge);
         var docFile = challengeFile.substr(0, challengeFile.lastIndexOf(".")) + ".html";
-        return this.sdk + "/" + docFile;
+        return "groc/" + this.sdk + "/challenges/" + docFile;
     };
     this.loadSource = function (challenge) {
         console.log("Loading " + this.rawSourceURL(challenge));

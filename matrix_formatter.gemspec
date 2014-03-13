@@ -21,9 +21,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'multi_json'
   spec.add_dependency 'redcarpet'
   # TODO: Remove nokogiri once slim works?
-  spec.add_dependency 'nokogiri'
   spec.add_dependency 'slim', '~> 1.3'
   spec.add_dependency 'sprockets'
+  spec.add_dependency 'sprockets-helpers'
+  spec.add_dependency 'yui-compressor'
   spec.add_dependency 'hashie'
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

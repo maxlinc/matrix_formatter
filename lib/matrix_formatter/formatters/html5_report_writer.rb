@@ -1,11 +1,24 @@
 require 'slim'
 require 'hashie/mash'
+require "matrix_formatter/assets/generator"
+require 'sprockets-helpers'
 
 class MatrixFormatter::Formatters::HTML5ReportWriter
+  include Sprockets::Helpers
+
   SLIM_OPTIONS = {:pretty => true, :format => :html5}
+
   def initialize output = StringIO.new
     @output = output
+    prefix = 'assets'
+    @asset_generator = MatrixFormatter::Assets::Generator.new :prefix => prefix
     @markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true)
+    @asset_generator.generate
+    Sprockets::Helpers.configure do |config|
+      config.environment = @asset_generator.environment
+      config.prefix      = prefix
+      config.digest = true
+    end
   end
 
   def write_report
@@ -68,6 +81,5 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
     partial_file = "_#{name}.html.slim"
     Slim::Template.new(resource_path(partial_file), SLIM_OPTIONS).render(self, locals)
   end
-
 
 end

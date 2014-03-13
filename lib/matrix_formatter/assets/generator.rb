@@ -6,7 +6,8 @@ module MatrixFormatter
     class Generator
       def initialize(options = {})
         @options = options
-        @sprocket_options = options[:sprocket_options] || {:minify => false}
+        @prefix = options[:prefix] || 'assets'
+        @sprocket_options = options[:sprocket_options] || {:minify => true}
       end
 
       def environment
@@ -15,7 +16,8 @@ module MatrixFormatter
 
       def generate(files = %w{dashboard.js dashboard.css})
         files.each do |file|
-          environment[file].write_to "docs/resources/#{file}"
+          asset = environment[file]
+          environment[file].write_to "docs/assets/#{asset.digest_path}"
         end
 
         # Copy bootstrap fonts and icons
@@ -45,8 +47,8 @@ module MatrixFormatter
         # environment.append_path vendor_path('bootstrap/dist/fonts')
 
         if @sprocket_options[:minify]
-          @environment.js_compressor  = :uglify
-          @environment.css_compressor = :scss
+          @environment.js_compressor  = :yui
+          @environment.css_compressor = :yui
         end
         @environment
       end
