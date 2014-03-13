@@ -1,3 +1,6 @@
+require 'slim'
+require 'hashie/mash'
+
 class MatrixFormatter::Formatters::HTML5ReportWriter
   SLIM_OPTIONS = {:pretty => true, :format => :html5}
   def initialize output = StringIO.new

@@ -1,4 +1,5 @@
 require 'sprockets'
+require 'fileutils'
 
 module MatrixFormatter
   module Assets

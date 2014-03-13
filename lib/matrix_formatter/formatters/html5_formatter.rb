@@ -1,10 +1,6 @@
 require 'matrix_formatter'
 require "matrix_formatter/assets/generator"
 require "matrix_formatter/formatters/html5_report_writer"
-require 'slim'
-require 'sprockets'
-require 'fileutils'
-require 'hashie/mash'
 
 class MatrixFormatter::Formatters::HTML5Formatter < MatrixFormatter::Formatters::BaseFormatter
   def start_dump
