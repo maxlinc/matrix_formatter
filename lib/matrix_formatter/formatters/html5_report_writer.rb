@@ -2,21 +2,23 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
   SLIM_OPTIONS = {:pretty => true, :format => :html5}
   def initialize output = StringIO.new
     @output = output
+    @markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true)
   end
 
-  def write_report matrix
-    @matrix = matrix
+  def write_report
+    @matrix.implementors = RSpec.configuration.matrix_implementors
     @output.puts Slim::Template.new(resource_path('dashboard.html.slim'), SLIM_OPTIONS).render(self)
   end
 
-  def merge_results results_dir
-    matrix = Hashie::Mash.new
-    Dir["#{results_dir}/*.json"].each do |result_file|
-      json_results = MultiJson.decode File.read(result_file)
-      matrix.results ||= {}
-      matrix.results.deep_merge! json_results
+  def parse_results jsons
+    @matrix ||= Hashie::Mash.new
+    @matrix.results ||= {}
+    [*jsons].each do |json|
+      json = File.read(json) if File.readable? json
+      json_results = MultiJson.decode json
+      @matrix.results.deep_merge! json_results
     end
-    matrix
+    @matrix
   end
 
   def results
@@ -43,7 +45,7 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
   end
 
   def sorted_results feature, results
-    RSpec.configuration.matrix_implementors.map { |implementor|
+    @matrix.implementors.map { |implementor|
       results[implementor] || Hashie::Mash.new({
         :state => "unknown",
         "data" => {"data-challenge"=>feature.data["challenge"], "data-sdk"=>implementor}
@@ -59,8 +61,10 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
     File.join(File.dirname(File.expand_path(__FILE__)), '../../../resources/vendor', name)
   end
 
-  def partial name
+  def partial name, locals = {}
     partial_file = "_#{name}.html.slim"
-    Slim::Template.new(resource_path(partial_file), SLIM_OPTIONS).render(self)
+    Slim::Template.new(resource_path(partial_file), SLIM_OPTIONS).render(self, locals)
   end
+
+
 end

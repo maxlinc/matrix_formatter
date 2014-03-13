@@ -10,7 +10,8 @@ class MatrixFormatter::Formatters::HTML5Formatter < MatrixFormatter::Formatters:
   def start_dump
     asset_generator = MatrixFormatter::Assets::Generator.new
     asset_generator.generate
-    report_writer = HTMLReportWriter.new('docs', @output)
-    report_writer.writer_report
+    report_writer = MatrixFormatter::Formatters::HTML5ReportWriter.new(@output)
+    report_writer.parse_results @matrix.to_json
+    report_writer.write_report
   end
 end

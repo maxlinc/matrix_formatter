@@ -2,12 +2,12 @@
   .modal-dialog
     .modal-content
       .modal-header
-        button.close aria-hidden="true" data-dismiss="modal" type="button"
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
         h4.modal-title Modal title
       .modal-body
         p This is a test
       .modal-footer
-        button.btn.btn-default data-dismiss="modal" type="button"
+        button.btn.btn-default data-dismiss="modal" type="button"  Close
     /! /.modal-content
   /! /.modal-dialog
 /! /.modal
@@ -15,7 +15,7 @@
   .modal-dialog
     .modal-content
       .modal-header
-        button.close aria-hidden="true" data-dismiss="modal" type="button"
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  &times;
         h4.modal-title Modal title
       .modal-body.container
         /! Header and Nav
@@ -27,14 +27,14 @@
               ul#sdk-nav.nav.nav-pills
           .col-lg-1.right
             .btn-group
-              button.btn.btn-default.dropdown-toggle data-toggle="dropdown" type="button"
+              button.btn.btn-default.dropdown-toggle data-toggle="dropdown" type="button" 
                 | Source
                 span.caret
-              ul.dropdown-menu role="menu"
+              ul.dropdown-menu role="menu" 
                 li
-                  a href="#"
+                  a href="#"  Source
                 li#annotated-nav
-                  a.disabled href="#"
+                  a.disabled href="#"  Annotated
                 li#github-nav
         /! End Header and Nav
         .row
@@ -52,5 +52,5 @@
         footer.row
           /! Nothing yet
       .modal-footer
-        button.btn.btn-default data-dismiss="modal" type="button"
-        button#test_changes.btn.btn-primary data-container="body" data-content="Coming soon?" data-placement="top" data-toggle="popover" type="button"
+        button.btn.btn-default data-dismiss="modal" type="button"  Close
+        button#test_changes.btn.btn-primary data-container="body" data-content=("Coming soon?") data-placement="top" data-toggle="popover" type="button"  Test changes

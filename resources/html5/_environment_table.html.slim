@@ -1,0 +1,16 @@
+a.modal-button = label
+aside data-label=label
+  table.table.table-striped
+    thead
+      tr
+        th
+          | Environment Variable
+        th
+          | Value
+    tbody
+      - environment.each do | key, value |
+        tr
+          td
+            = key
+          td
+            = value
