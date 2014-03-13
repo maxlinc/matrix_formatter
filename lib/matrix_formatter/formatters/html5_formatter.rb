@@ -6,33 +6,10 @@ require 'hashie/mash'
 
 class MatrixFormatter::Formatters::HTML5Formatter < MatrixFormatter::Formatters::BaseFormatter
   SLIM_OPTIONS = {:pretty => true, :format => :html5}
-  SPROCKET_OPTIONS = {:minify => false}
   def start_dump
-    sprocketify
+    asset_generator = MatrixFormatter::Assets::Generator.new
+    asset_generator.generate
     @output.puts Slim::Template.new(resource_path('dashboard.html.slim'), SLIM_OPTIONS).render(self)
-  end
-
-  def sprocketify
-    environment = Sprockets::Environment.new
-    environment.append_path resource_path('css')
-    environment.append_path resource_path('javascript')
-    # FIXME: Not sure Bower integration will work as well as I hoped
-    environment.append_path vendor_path('sizzle/dist')
-    environment.append_path vendor_path('jquery/dist')
-    environment.append_path vendor_path('bootstrap/dist/js')
-    environment.append_path vendor_path('bootstrap/dist/css')
-    # environment.append_path vendor_path('bootstrap/dist/fonts')
-
-    if SPROCKET_OPTIONS[:minify]
-      environment.js_compressor  = :uglify
-      environment.css_compressor = :scss
-    end
-    environment['dashboard.js'].write_to 'docs/resources/dashboard.js'
-    environment['dashboard.css'].write_to 'docs/resources/dashboard.css'
-
-    # Copy bootstrap fonts and icons
-    FileUtils.mkdir_p "docs/fonts/"
-    FileUtils.cp_r vendor_path('bootstrap/dist/fonts/'), "docs/"
   end
 
   private
