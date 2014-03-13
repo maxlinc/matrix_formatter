@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery.stickytableheaders.min
 //= require bootstrap
+//= require_tree .
 // bootstrap-theme?
 String.prototype.toCamel = function(){
     return this.replace(/([\-\_][a-z])/g, function($1){return $1.toUpperCase().replace(/[-_]/,'');});
