@@ -1,5 +1,12 @@
 require 'matrix_formatter'
-class MatrixFormatter::Formatters::MarkdownFormatter < MatrixFormatter::Formatters::BaseFormatter
+class MatrixFormatter::Formatters::MarkdownFormatter < RSpec::Core::Formatters::BaseFormatter
+  include MatrixFormatter::Formatters::BaseFormatter
+
+  def initialize(output)
+    super(output)
+    @matrix = matrix
+  end
+
   def markdown
     buffer = StringIO.new
     header_line = ['Feature Group', 'Feature', RSpec.configuration.matrix_implementors].join ' | '

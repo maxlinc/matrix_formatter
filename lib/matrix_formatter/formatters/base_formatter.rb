@@ -2,13 +2,8 @@ require 'rspec/core/formatters/base_text_formatter'
 
 module MatrixFormatter
   module Formatters
-    class BaseFormatter < RSpec::Core::Formatters::BaseFormatter
+    module BaseFormatter
       attr_accessor :matrix
-
-      def initialize(output)
-        super(output)
-        @matrix = matrix
-      end
 
       def start(expected_example_count)
         @matrix ||= MatrixFormatter::FeatureMatrix.new
