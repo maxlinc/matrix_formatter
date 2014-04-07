@@ -49,7 +49,7 @@ describe 'Cool Features' do
   end
   describe 'reads your mind' do
     implementors.each do |implementor|
-      pending implementor
+      skip implementor
     end
   end
 end
