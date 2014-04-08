@@ -1,48 +1,43 @@
-doctype html
-html
-  == partial "header"
-
-  table id="feature_matrix" class="feature_matrix table"
-    thead class="matrix_labels"
-      tr
-        - labels.each do | label_text |
-          th = label_text
-      tbody class="feature_matrix"
-        - @matrix.results.each do |product_key, product| \
-            inserted_group_td = false
-            - product.features.each do |feature_key, feature| \
-              results = feature.results
-              tr
-                - unless inserted_group_td
-                  td class="feature_group" data-feature-group=product_key rowspan=product.features.size
-                    span class="section_label" = product_key
-                    span class="btn-group pull-right"
-                      button type="button" class="btn btn-xs dropdown-toggle" data-toggle="dropdown"
-                        i class="glyphicon glyphicon-chevron-down"
-                        ul class="dropdown-menu" role="menu"
-                          - if product.markdown
-                            li
-                              == partial "markdown_aside", :markdown => product.markdown, :label => "Product Overview"
-                  - inserted_group_td = true
-
-                td class="feature" data-feature=feature_key
-                  span class="section_label" = feature_key
+table id="feature_matrix" class="feature_matrix table"
+  thead class="matrix_labels"
+    tr
+      - labels.each do | label_text |
+        th = label_text
+    tbody class="feature_matrix"
+      - @matrix.results.each do |product_key, product| \
+          inserted_group_td = false
+          - product.features.each do |feature_key, feature| \
+            results = feature.results
+            tr
+              - unless inserted_group_td
+                td class="feature_group" data-feature-group=product_key rowspan=product.features.size
+                  span class="section_label" = product_key
                   span class="btn-group pull-right"
                     button type="button" class="btn btn-xs dropdown-toggle" data-toggle="dropdown"
                       i class="glyphicon glyphicon-chevron-down"
-                    ul class="dropdown-menu" role="menu"
-                      - if feature.markdown
-                        li == partial "markdown_aside", :markdown => feature.markdown, :label => "Scenario"
-                      - if feature.environment
-                        li == partial "environment_table", :environment => feature.environment, :label => "Environment"
-                      - if feature.services
-                        li == partial "service_list", :services => feature.services, :label => "Services"
-                - sorted_results(feature, results).each do |result|
-                   td class=result.state *result.data
-                     a data-toggle="modal" data-feature-group=product_key data-feature=feature_key href="#code_modal" *result.data
-                       span = result.state
-                     - if result.state == "passed"
-                         span class="badge pull-right" = "#{result.runtime.round}s"
-                     - if result.markdown # results should probably prefer docco over markdown metadata
-                      li == partial "markdown_aside", :markdown => result.markdown
-  == partial "footer"
+                      ul class="dropdown-menu" role="menu"
+                        - if product.markdown
+                          li
+                            == partial "markdown_aside", :markdown => product.markdown, :label => "Product Overview"
+                - inserted_group_td = true
+
+              td class="feature" data-feature=feature_key
+                span class="section_label" = feature_key
+                span class="btn-group pull-right"
+                  button type="button" class="btn btn-xs dropdown-toggle" data-toggle="dropdown"
+                    i class="glyphicon glyphicon-chevron-down"
+                  ul class="dropdown-menu" role="menu"
+                    - if feature.markdown
+                      li == partial "markdown_aside", :markdown => feature.markdown, :label => "Scenario"
+                    - if feature.environment
+                      li == partial "environment_table", :environment => feature.environment, :label => "Environment"
+                    - if feature.services
+                      li == partial "service_list", :services => feature.services, :label => "Services"
+              - sorted_results(feature, results).each do |result|
+                 td class=result.state *result.data
+                   a data-toggle="modal" data-feature-group=product_key data-feature=feature_key href="#code_modal" *result.data
+                     span = result.state
+                   - if result.state == "passed"
+                       span class="badge pull-right" = "#{result.runtime.round}s"
+                   - if result.markdown # results should probably prefer docco over markdown metadata
+                    li == partial "markdown_aside", :markdown => result.markdown

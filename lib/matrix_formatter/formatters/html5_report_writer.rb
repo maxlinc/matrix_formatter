@@ -8,8 +8,9 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
 
   SLIM_OPTIONS = {:pretty => true, :format => :html5}
 
-  def initialize output = StringIO.new
+  def initialize(output, options)
     @output = output
+    @options = options
     prefix = 'assets'
     @asset_generator = MatrixFormatter::Assets::Generator.new :prefix => prefix
     @markdown_renderer = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :tables => true)
@@ -23,7 +24,14 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
 
   def write_report
     @matrix.implementors = RSpec.configuration.matrix_implementors
-    @output.puts Slim::Template.new(resource_path('dashboard.html.slim'), SLIM_OPTIONS).render(self)
+    options = RSpec.configuration.matrix_options
+    content = render 'dashboard.html.slim'
+    if options[:layout]
+      content = render options[:layout] do
+        content
+      end
+    end
+    @output.puts content
   end
 
   def parse_results jsons
@@ -55,6 +63,12 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
   end
 
   private
+
+  def render(template)
+    Slim::Template.new(resource_path(template), SLIM_OPTIONS).render(self) do
+      yield
+    end
+  end
 
   def labels
     ['Feature Group', 'Feature', @matrix.implementors].flatten

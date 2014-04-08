@@ -10,7 +10,7 @@ class MatrixFormatter::Formatters::HTML5Formatter < RSpec::Core::Formatters::Bas
   end
 
   def start_dump
-    report_writer = MatrixFormatter::Formatters::HTML5ReportWriter.new(@output)
+    report_writer = MatrixFormatter::Formatters::HTML5ReportWriter.new(@output, @options)
     report_writer.parse_results @matrix.to_json
     report_writer.write_report
   end

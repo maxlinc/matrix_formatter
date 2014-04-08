@@ -3,6 +3,7 @@ require 'matrix_formatter'
 implementors = ['LegacyWidget', 'HTML5Widget']
 RSpec.configure do |config|
   config.matrix_implementors = ['LegacyWidget', 'HTML5Widget']
+  # config.matrix_options = { :layout => nil }
 end
 
 describe 'MVP Features', :markdown =>
