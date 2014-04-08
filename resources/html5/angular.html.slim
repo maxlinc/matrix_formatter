@@ -38,5 +38,5 @@ html
           td data-title="'Feature'" sortable="feature"
             | {{feature.feature}}
           - @matrix.implementors.each do | label_text |
-            td data-title="'#{label_text}'" sortable="#{label_text}" ng-class="{'passed': feature.#{slug(label_text)} === 'passed', 'failed': feature.#{slug(label_text)} === 'failed'}"
+            td data-title="'#{label_text}'" sortable="#{slug(label_text)}" ng-class="{'passed': feature.#{slug(label_text)} === 'passed', 'failed': feature.#{slug(label_text)} === 'failed'}"
               | {{feature.#{slug(label_text)}}}
