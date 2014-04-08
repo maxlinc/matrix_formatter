@@ -1,7 +1,7 @@
 require 'matrix_formatter'
 require "matrix_formatter/formatters/html5_report_writer"
 
-class MatrixFormatter::Formatters::HTML5Formatter < RSpec::Core::Formatters::BaseFormatter
+class MatrixFormatter::Formatters::AngularFormatter < RSpec::Core::Formatters::BaseFormatter
   include MatrixFormatter::Formatters::BaseFormatter
 
   def initialize(output)
@@ -11,7 +11,8 @@ class MatrixFormatter::Formatters::HTML5Formatter < RSpec::Core::Formatters::Bas
   end
 
   def start_dump
-    @options[:view] = 'dashboard.html.slim'
+    @options[:view] = 'angular.html.slim'
+    # @options[:layout] = nil
     report_writer = MatrixFormatter::Formatters::HTML5ReportWriter.new(@output, @options)
     report_writer.parse_results @matrix.to_json
     report_writer.write_report

@@ -24,10 +24,9 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
 
   def write_report
     @matrix.implementors = RSpec.configuration.matrix_implementors
-    options = RSpec.configuration.matrix_options
-    content = render 'dashboard.html.slim'
-    if options[:layout]
-      content = render options[:layout] do
+    content = render @options[:view]
+    if @options[:layout]
+      content = render @options[:layout] do
         content
       end
     end
@@ -58,6 +57,22 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
     result_stats
   end
 
+  def result_grid
+    grid = []
+    @matrix.results.each do |product_key, product|
+      product.features.each do |feature_key, feature|
+        feature_line = Hashie::Mash.new
+        feature_line.product = product_key
+        feature_line.feature = feature_key
+        feature.results.each do |result_key, result_data|
+          feature_line[slug(result_key)] = result_data['state']
+        end
+        grid << feature_line
+      end
+    end
+    grid.to_json
+  end
+
   def has_failures?
     results[:failed] != 0
   end
@@ -72,6 +87,10 @@ class MatrixFormatter::Formatters::HTML5ReportWriter
 
   def labels
     ['Feature Group', 'Feature', @matrix.implementors].flatten
+  end
+
+  def slug(label)
+    label.gsub('.','_').gsub('-','_')
   end
 
   def sorted_results feature, results

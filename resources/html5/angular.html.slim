@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    link data-require="bootstrap-css@*" data-semver="3.0.0" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
+    link href="style.css" rel="stylesheet" /
+  body ng-app="main" ng-controller="DemoCtrl" 
+    script data-require="angular.js@*" data-semver="1.2.0-rc3-nonmin" src="http://code.angularjs.org/1.2.0-rc.3/angular.js" 
+    script data-require="ng-table@*" data-semver="0.3.0" src="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.js"
+    link data-require="ng-table@*" data-semver="0.3.0" href="http://bazalt-cms.com/assets/ng-table/0.3.0/ng-table.css" rel="stylesheet"
+    javascript:
+        var app = angular.module('main', ['ngTable']).
+        controller('DemoCtrl', function($scope, $filter, ngTableParams) {
+            var data = #{{result_grid}};
+
+            $scope.tableParams = new ngTableParams({
+                page: 1,            // show first page
+                count: -1           // count per page
+            }, {
+                groupBy: 'product',
+                total: data.length,
+                getData: function($defer, params) {
+                    var orderedData = params.sorting() ?
+                            $filter('orderBy')(data, $scope.tableParams.orderBy()) :
+                            data;
+
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+        })
+    table.table ng-table="tableParams" 
+      tbody ng-repeat=("group in $groups") 
+        tr.ng-table-group
+          td colspan="{{$columns.length}}" 
+            a href="" ng-click=("group.$hideRows = !group.$hideRows") 
+              span.glyphicon ng-class="{ 'glyphicon-chevron-right': group.$hideRows), 'glyphicon-chevron-down': !group.$hideRows }"
+              strong  {{ group.value }} 
+        tr ng-hide="group.$hideRows" ng-repeat=("feature in group.data") 
+          td data-title="'Feature'" sortable="feature"
+            | {{feature.feature}}
+          - @matrix.implementors.each do | label_text |
+            td data-title="'#{label_text}'" sortable="#{label_text}" ng-class="{'passed': feature.#{slug(label_text)} === 'passed', 'failed': feature.#{slug(label_text)} === 'failed'}"
+              | {{feature.#{slug(label_text)}}}
