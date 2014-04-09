@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Matrix formatter : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Matrix formatter</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/maxlinc/matrix_formatter">View on GitHub</a>
+
+          <h1 id="project_title">Matrix formatter</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/maxlinc/matrix_formatter/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/maxlinc/matrix_formatter/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="matrixformatter" class="anchor" href="#matrixformatter"><span class="octicon octicon-link"></span></a>MatrixFormatter</h1>
+
+<p>Generates a Feature Matrix from specs following a certain pattern.</p>
+
+<p>Given tests like these:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'matrix_formatter'</span>
+
+<span class="n">implementors</span> <span class="o">=</span> <span class="o">[</span><span class="s1">'LegacyWidget'</span><span class="p">,</span> <span class="s1">'HTML5Widget'</span><span class="o">]</span>
+<span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">matrix_implementors</span> <span class="o">=</span> <span class="o">[</span><span class="s1">'LegacyWidget'</span><span class="p">,</span> <span class="s1">'HTML5Widget'</span><span class="o">]</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="s1">'MVP Features'</span> <span class="k">do</span>
+  <span class="n">implementors</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">implementor</span><span class="o">|</span>
+    <span class="n">context</span> <span class="n">implementor</span> <span class="k">do</span>
+      <span class="n">it</span> <span class="s1">'creates a thing'</span> <span class="k">do</span>
+        <span class="nb">fail</span> <span class="k">if</span> <span class="n">implementor</span><span class="o">.</span><span class="n">eql?</span> <span class="n">implementors</span><span class="o">.</span><span class="n">first</span>
+      <span class="k">end</span>
+      <span class="n">it</span> <span class="s1">'saves a thing'</span> <span class="k">do</span>
+        <span class="nb">fail</span> <span class="k">unless</span> <span class="n">implementor</span><span class="o">.</span><span class="n">eql?</span> <span class="n">implementors</span><span class="o">.</span><span class="n">first</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">describe</span> <span class="s1">'Cool Features'</span> <span class="k">do</span>
+  <span class="n">implementors</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">implementor</span><span class="o">|</span>
+    <span class="n">context</span> <span class="n">implementor</span> <span class="k">do</span>
+      <span class="n">it</span> <span class="s1">'renders a nyan cat video'</span> <span class="k">do</span>
+        <span class="nb">fail</span> <span class="k">if</span> <span class="n">implementor</span><span class="o">.</span><span class="n">eql?</span> <span class="n">implementors</span><span class="o">.</span><span class="n">first</span>
+      <span class="k">end</span>
+      <span class="n">it</span> <span class="s1">'does a headstand'</span> <span class="k">do</span>
+        <span class="nb">fail</span> <span class="k">unless</span> <span class="n">implementor</span><span class="o">.</span><span class="n">eql?</span> <span class="n">implementors</span><span class="o">.</span><span class="n">first</span>
+      <span class="k">end</span>
+      <span class="n">pending</span> <span class="s1">'reads your mind'</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>It will produce output like this:
+<img src="https://raw.github.com/maxlinc/matrix_formatter/master/sample_html.png" alt="Preview"></p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'matrix_formatter'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Together with the documentation formatter:</p>
+
+<p><code>rspec sample_spec.rb --format documentation --format MatrixFormatter::Formatters::HTMLFormatter --out matrix.html</code></p>
+
+<p>or via .rspec:</p>
+
+<div class="highlight highlight-rb"><pre><span class="o">--</span><span class="nb">format</span> <span class="n">documentation</span>
+<span class="o">--</span><span class="nb">format</span> <span class="no">MatrixFormatter</span><span class="o">::</span><span class="no">Formatters</span><span class="o">::</span><span class="no">HTMLFormatter</span>
+<span class="o">--</span><span class="n">out</span> <span class="n">matrix</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Matrix formatter maintained by <a href="https://github.com/maxlinc">maxlinc</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
